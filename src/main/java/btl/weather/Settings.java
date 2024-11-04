@@ -1,3 +1,5 @@
+package btl.weather;
+
 public class Settings {
     private String temperatureUnit;
     private String windSpeedUnit;
