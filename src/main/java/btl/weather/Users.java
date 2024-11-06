@@ -16,14 +16,14 @@ public class Users {
         this.plans = new ArrayList<>();
     }
 
-    public String properties() {
-        return "UserId: " + userId + "\n" +
-                "Username: " + username + "\n" +
-                "Email: " + email + "\n" +
-                "Location: " + location + "\n" +
-                "Settings: " + settings + "\n" +
-                "Plans: " + plans;
-    }
+//    public String properties() {
+//        return "UserId: " + userId + "\n" +
+//                "Username: " + username + "\n" +
+//                "Email: " + email + "\n" +
+//                "Location: " + location + "\n" +
+//                "Settings: " + settings + "\n" +
+//                "Plans: " + plans;
+//    }
 
     public String getUserId() {
         return userId;
@@ -86,46 +86,22 @@ public class Users {
         }
     }
 
-    // Weather methods
-    public WeatherCurrently getCurrentWeather(Location location, Settings settings) {
-        //
-        //
-        return new WeatherCurrently();
-    }
-
-    public WeatherHourly getHourlyWeather(Location location, Settings settings) {
-        //
-        //
-        return new WeatherHourly();
-    }
-
-    public WeatherDaily getDailyWeather(Location location, Settings settings) {
-        //
-        //
-        return new WeatherDaily();
-    }
-}
-
-class Location {
-    //
-}
-
-class Settings {
-    //
-}
-
-class Plan {
-    //
-}
-
-class WeatherCurrently {
-    //
-}
-
-class WeatherHourly {
-    //
-}
-
-class WeatherDaily {
-    //
+//    // Weather methods
+//    public WeatherCurrently getCurrentWeather(Location location, Settings settings) {
+//        //
+//        //
+//        return new WeatherCurrently();
+//    }
+//
+//    public WeatherHourly getHourlyWeather(Location location, Settings settings) {
+//        //
+//        //
+//        return new WeatherHourly();
+//    }
+//
+//    public WeatherDaily getDailyWeather(Location location, Settings settings) {
+//        //
+//        //
+//        return new WeatherDaily();
+//    }
 }

@@ -2,18 +2,17 @@ package btl.weather;
 
 import java.util.Date;
 
-public class WeatherDaily {
+public class WeatherDaily extends WeatherData{
 
     private Date date;
     private float highTemperature;
     private float lowTemperature;
-    private float rainProbability;
 
-    public WeatherDaily(Date date, float highTemperature, float lowTemperature, float rainProbability) {
+    public WeatherDaily(Date date, float highTemperature, float lowTemperature, float rainProbability, float humid) {
+        super(highTemperature, rainProbability, humid);
         this.date = date;
         this.highTemperature = highTemperature;
         this.lowTemperature = lowTemperature;
-        this.rainProbability = rainProbability;
     }
 
     // Getter and Setter for date
