@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class RegisterForm extends JPanel {
     Map<Integer, JTextField> inputMap = new HashMap<>();
+    String preferredUnit = "°C";
     public RegisterForm(String[] fields) {
         this.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -22,8 +23,8 @@ public class RegisterForm extends JPanel {
             this.add(label, constraints);
             constraints.gridy++;
         }
-        JLabel unitLabel = new JLabel("Preferred unit");
-        this.add(unitLabel, constraints);
+        JLabel tempUnitLabel = new JLabel("Temperature Unit");
+        this.add(tempUnitLabel, constraints);
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
@@ -37,7 +38,10 @@ public class RegisterForm extends JPanel {
             constraints.gridy++;
         }
 
-        JComboBox<String> unitComboBox = new JComboBox<>(new String[]{"°C - m/s", "°F - mph"});
+        JComboBox<String> unitComboBox = new JComboBox<>(new String[]{"°C", "°F"});
+        unitComboBox.addActionListener(e -> {
+            this.preferredUnit = unitComboBox.getSelectedItem().toString();
+        });
         this.add(unitComboBox, constraints);
     }
 
@@ -45,4 +49,7 @@ public class RegisterForm extends JPanel {
         return inputMap.get(index);
     }
 
+    public String getPreferredUnit() {
+        return this.preferredUnit;
+    }
 }

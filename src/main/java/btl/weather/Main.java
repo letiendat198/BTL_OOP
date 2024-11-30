@@ -1,9 +1,13 @@
 package btl.weather;
 
+import btl.weather.views.DailyForecast;
+import btl.weather.views.MainForecast;
 import btl.weather.views.RegisterForm;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,7 +31,8 @@ public class Main {
         constraints.gridy = 0;
         constraints.gridwidth = 2;
         constraints.insets = new Insets(10, 50, 0, 50);
-        RegisterForm registerForm = new RegisterForm(new String[]{"Username", "Email", "City", "Country"});
+        String[] registerFields = new String[]{"Username", "Email", "City", "Country"};
+        RegisterForm registerForm = new RegisterForm(registerFields);
         mainContainer.add(registerForm, constraints);
 
         constraints.fill = GridBagConstraints.NONE;
@@ -37,6 +42,17 @@ public class Main {
         constraints.gridwidth = 1;
         constraints.insets = new Insets(10, 0, 0, 0);
         JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(e -> {
+            UserManager userManager = new UserManager();
+            String username = registerForm.getTextFieldByIndex(0).getText();
+            boolean isUserExist = userManager.validateUserByUsername(username);
+            if (isUserExist) {
+                User user = userManager.getUserByUsername(username);
+                MainForecast mainForecastFrame = new MainForecast(user);
+                mainForecastFrame.setVisible(true);
+            }
+            else JOptionPane.showMessageDialog(mainFrame, "User not found!", "Login Error!", JOptionPane.ERROR_MESSAGE);
+        });
         mainContainer.add(loginButton, constraints);
 
         constraints.fill = GridBagConstraints.NONE;
@@ -46,6 +62,20 @@ public class Main {
         constraints.gridwidth = 1;
         constraints.insets = new Insets(10, 0, 0, 0);
         JButton registerButton = new JButton("Register");
+        registerButton.addActionListener(e -> {
+            User user = new User();
+            user.setUserId(registerForm.getTextFieldByIndex(0).getText());
+            user.setEmail(registerForm.getTextFieldByIndex(1).getText());
+            user.setPreferredUnit(registerForm.getPreferredUnit());
+            Location location = new Location();
+            location.setCity(registerForm.getTextFieldByIndex(2).getText());
+            location.setCountry(registerForm.getTextFieldByIndex(3).getText());
+            user.setLocation(location);
+
+            UserManager userManager = new UserManager();
+            userManager.createNewUser(user);
+            JOptionPane.showMessageDialog(mainFrame, "New user created successfully", "New User Created", JOptionPane.INFORMATION_MESSAGE);
+        });
         mainContainer.add(registerButton, constraints);
 
         mainPanel.add(title, BorderLayout.NORTH);

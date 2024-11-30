@@ -2,25 +2,43 @@ package btl.weather;
 
 import java.util.Date;
 
-public class WeatherHourly extends WeatherData {
-    private short hour;
+public class WeatherHourly {
+    private float temperature;
+    private float rainProbability;
+    private float humidity;
     private Date date;
     private float feelTemperature;
 
-    public WeatherHourly(short hour, Date date, float temp, float fTemp, float rainP, float humid) {
-        super(temp, rainP, humid);
-        this.hour = hour;
+    public WeatherHourly(Date dat, float temperature, float feelTemperature, float rainProbability, float humidity) {
+        this.temperature = temperature;
+        this.rainProbability = rainProbability;
+        this.humidity = humidity;
         this.date = date;
-        feelTemperature = fTemp;
+        this.feelTemperature = feelTemperature;
     }
 
-    // Getter and Setter for hour
-    public short getHour() {
-        return hour;
+    public float getTemperature() {
+        return temperature;
     }
 
-    public void setHour(short hour) {
-        this.hour = hour;
+    public void setTemperature(float temperature) {
+        this.temperature = temperature;
+    }
+
+    public float getRainProbability() {
+        return rainProbability;
+    }
+
+    public void setRainProbability(float rainProbability) {
+        this.rainProbability = rainProbability;
+    }
+
+    public float getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(float humidity) {
+        this.humidity = humidity;
     }
 
     // Getter and Setter for date

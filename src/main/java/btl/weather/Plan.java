@@ -1,8 +1,9 @@
 package btl.weather;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Plan {
+public class Plan implements Serializable {
 
     private String title;
     private String content;

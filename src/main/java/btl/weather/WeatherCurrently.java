@@ -1,15 +1,42 @@
 package btl.weather;
 
-public class WeatherCurrently extends WeatherData {
+public class WeatherCurrently {
+    private float temperature;
+    private float rainProbability;
+    private float humidity;
     private float feelTemperature;
-    private short windSpeed;
-    private short airQualityIndex;
+    private int airQualityIndex;
 
-    public WeatherCurrently(float temp, float fTemp, float humid, short windSp, float rainP, short aqi) {
-        super(temp, rainP, humid);
-        this.feelTemperature = fTemp;
-        this.windSpeed = windSp;
-        this.airQualityIndex = aqi;
+    public WeatherCurrently(float feelTemperature, float temperature, float rainProbability, float humidity, int airQualityIndex) {
+        this.feelTemperature = feelTemperature;
+        this.temperature = temperature;
+        this.rainProbability = rainProbability;
+        this.humidity = humidity;
+        this.airQualityIndex = airQualityIndex;
+    }
+
+    public float getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(float temperature) {
+        this.temperature = temperature;
+    }
+
+    public float getRainProbability() {
+        return rainProbability;
+    }
+
+    public void setRainProbability(float rainProbability) {
+        this.rainProbability = rainProbability;
+    }
+
+    public float getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(float humidity) {
+        this.humidity = humidity;
     }
 
     // Getter and Setter for feelTemperature
@@ -21,21 +48,12 @@ public class WeatherCurrently extends WeatherData {
         this.feelTemperature = fTemp;
     }
 
-    // Getter and Setter for windSpeed
-    public short getWindSpeed() {
-        return windSpeed;
-    }
-
-    public void setWindSpeed(short windSp) {
-        this.windSpeed = windSp;
-    }
-
     // Getter and Setter for airQualityIndex
-    public short getAirQualityIndex() {
+    public int getAirQualityIndex() {
         return airQualityIndex;
     }
 
-    public void setAirQualityIndex(short aqi) {
+    public void setAirQualityIndex(int aqi) {
         this.airQualityIndex = aqi;
     }
 }

@@ -1,6 +1,8 @@
 package btl.weather;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
     private double longitude;
     private double latitude;
     private String city;

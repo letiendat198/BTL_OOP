@@ -1,29 +1,21 @@
 package btl.weather;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Users {
+public class User implements Serializable {
 
     private String userId;
     private String username;
     private String email;
+    private String preferredUnit;
     private Location location;
-    private Settings settings;
     private List<Plan> plans;
 
-    public Users() {
+    public User() {
         this.plans = new ArrayList<>();
     }
-
-//    public String properties() {
-//        return "UserId: " + userId + "\n" +
-//                "Username: " + username + "\n" +
-//                "Email: " + email + "\n" +
-//                "Location: " + location + "\n" +
-//                "Settings: " + settings + "\n" +
-//                "Plans: " + plans;
-//    }
 
     public String getUserId() {
         return userId;
@@ -57,12 +49,12 @@ public class Users {
         this.location = location;
     }
 
-    public Settings getSettings() {
-        return settings;
+    public String getPreferredUnit() {
+        return preferredUnit;
     }
 
-    public void setSettings(Settings settings) {
-        this.settings = settings;
+    public void setPreferredUnit(String preferredUnit) {
+        this.preferredUnit = preferredUnit;
     }
 
     public void addPlan(Plan plan) {
@@ -85,23 +77,4 @@ public class Users {
             return null;
         }
     }
-
-//    // Weather methods
-//    public WeatherCurrently getCurrentWeather(Location location, Settings settings) {
-//        //
-//        //
-//        return new WeatherCurrently();
-//    }
-//
-//    public WeatherHourly getHourlyWeather(Location location, Settings settings) {
-//        //
-//        //
-//        return new WeatherHourly();
-//    }
-//
-//    public WeatherDaily getDailyWeather(Location location, Settings settings) {
-//        //
-//        //
-//        return new WeatherDaily();
-//    }
 }

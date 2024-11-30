@@ -1,31 +1,30 @@
 package btl.weather.views;
 
+import btl.weather.User;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.table.JTableHeader;
 
-public class WeatherForecastApp {
-    public static void main(String[] args) {
-        // Create JFrame
-        JFrame frame = new JFrame("Weather Forecast Application");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(900, 500);
-        frame.setLocationRelativeTo(null);  // Center the frame on the screen
+public class DailyForecast extends JPanel{
+    User user;
+    Date date;
+    public DailyForecast(User user) {
+        this.user = user;
+        date = new Date();
 
         // Column names for the table (Days of the week)
         String[] columnNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
         // Weather data for each day: [Temperature, Weather Condition, Humidity, Wind, Pressure, Rain]
-        Object[][] data = {
+        String[][] data = {
                 {"28°C", "30°C", "27°C", "29°C", "31°C", "32°C", "30°C"}, // Temperature
                 {"Sunny", "Cloudy", "Rainy", "Sunny", "Cloudy", "Sunny", "Sunny"}, // Weather Condition
-                {"60%", "55%", "75%", "65%", "50%", "40%", "60%"}, // Humidity
-                {"15 km/h", "18 km/h", "12 km/h", "20 km/h", "17 km/h", "22 km/h", "14 km/h"}, // Wind
-                {"1010 hPa", "1012 hPa", "1009 hPa", "1013 hPa", "1011 hPa", "1014 hPa", "1010 hPa"}, // Pressure
-                {"0 mm", "0 mm", "10 mm", "0 mm", "0 mm", "0 mm", "0 mm"}  // Rain
+                {"60%", "55%", "75%", "65%", "50%", "40%", "60%"}, // Rain Chance
         };
 
         // Create DefaultTableModel with data and column names
@@ -81,17 +80,10 @@ public class WeatherForecastApp {
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 2)); // Add border to the scrollPane
 
         // Create a panel with a nice background
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBackground(new Color(240, 240, 240));  // Light gray background for the panel
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));  // Add padding around the content
-        panel.add(scrollPane, BorderLayout.CENTER);
-
-        // Add panel to the frame
-        frame.getContentPane().add(panel);
-
-        // Set the frame visible
-        frame.setVisible(true);
+        this.setLayout(new BorderLayout());
+        this.setBackground(new Color(240, 240, 240));  // Light gray background for the panel
+        this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));  // Add padding around the content
+        this.add(scrollPane, BorderLayout.CENTER);
     }
 }
 
