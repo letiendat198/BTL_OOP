@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         JFrame mainFrame = new JFrame("Weather App");
 
-        mainFrame.setMinimumSize(new Dimension(400, 350));
+        mainFrame.setMinimumSize(new Dimension(400, 375));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel mainPanel = new JPanel(new BorderLayout()); // Use BorderLayout, which will center children by default
