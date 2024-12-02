@@ -17,7 +17,8 @@ public class Planner extends JPanel {
     private String username; // Tên người dùng
 
     public Planner(User user) {
-        this.username = user.getUsername();  // Nhận tên người dùng khi đăng nhập
+        this.username = user.getUserId();  // Nhận tên người dùng khi đăng nhập
+        System.out.println(username);
         setLayout(new BorderLayout());  // Cài đặt Layout cho panel
 
         // Tạo bảng điều khiển (panel)
@@ -120,7 +121,17 @@ public class Planner extends JPanel {
 
     // Lưu công việc vào file
     private void saveTaskToFile(String date, String task) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(username + "_tasks.txt", true))) {
+        // Tạo thư mục "planner" nếu chưa tồn tại
+        File plannerDir = new File("planner");
+        if (!plannerDir.exists()) {
+            plannerDir.mkdirs();  // Tạo thư mục nếu chưa có
+        }
+
+        // Tạo tệp công việc của người dùng trong thư mục "planner"
+        File taskFile = new File(plannerDir, username + "_tasks.txt");
+
+        // Ghi công việc vào file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(taskFile, true))) {
             writer.write(date + " - " + task);
             writer.newLine();
         } catch (IOException e) {
@@ -128,9 +139,20 @@ public class Planner extends JPanel {
         }
     }
 
+
     // Tải công việc từ file của người dùng
     private void loadTasksFromFile() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(username + "_tasks.txt"))) {
+        // Đường dẫn đến thư mục "planner" và tệp công việc của người dùng
+        File plannerDir = new File("planner");
+        File taskFile = new File(plannerDir, username + "_tasks.txt");
+
+        // Kiểm tra xem tệp có tồn tại không
+        if (!taskFile.exists()) {
+            return;  // Nếu không có tệp, không làm gì cả
+        }
+
+        // Đọc dữ liệu từ file công việc
+        try (BufferedReader reader = new BufferedReader(new FileReader(taskFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 taskListModel.addElement(line);
@@ -139,4 +161,5 @@ public class Planner extends JPanel {
             e.printStackTrace();
         }
     }
+
 }
