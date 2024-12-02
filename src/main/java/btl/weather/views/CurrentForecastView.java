@@ -60,6 +60,7 @@ public class CurrentForecastView extends JPanel {
         Dimension scrollPreferredSize = hourlyForecastSection.getPreferredSize();
         scrollPreferredSize.height = 130;
         hourlyForecastSection.setPreferredSize(scrollPreferredSize);
+
         JScrollPane scrollPane = new JScrollPane(hourlyForecastSection);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 10));
