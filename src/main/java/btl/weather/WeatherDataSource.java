@@ -5,13 +5,12 @@ import java.util.Random;
 
 public class WeatherDataSource {
     User user;
-    Random random;
     public WeatherDataSource(User user) {
         this.user = user;
-        random = new Random();
     }
 
     private float generateRandomFloat(float min, float max) {
+        Random random = new Random();
         return random.nextFloat(max - min) + min;
     }
 
@@ -31,6 +30,7 @@ public class WeatherDataSource {
     }
 
     public int getAqi() {
+        Random random = new Random();
         return random.nextInt(500);
     }
 

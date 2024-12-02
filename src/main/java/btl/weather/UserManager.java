@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserManager {
-    ObjectInputStream ois;
     static Map<String, User> userData = new HashMap<>();
     public UserManager() {
         try {
@@ -16,7 +15,7 @@ public class UserManager {
                 oos.writeObject(userData);
                 oos.close();
             }
-            ois = new ObjectInputStream(new FileInputStream("users.dat"));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("users.dat"));
             userData = (HashMap<String, User>) ois.readObject();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
