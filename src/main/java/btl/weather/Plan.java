@@ -1,27 +1,16 @@
 package btl.weather;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Plan implements Serializable {
-
-    private String title;
     private String content;
     private Date date;
 
-    public Plan(String title, String content, Date date) {
-        this.title = title;
+    public Plan(String content, Date date) {
         this.content = content;
         this.date = date;
-    }
-
-    // Getter and Setter for title
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     // Getter and Setter for content
@@ -40,5 +29,11 @@ public class Plan implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(date) + " - " + content;
     }
 }

@@ -3,8 +3,13 @@ package btl.weather.views;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import btl.weather.Plan;
 import btl.weather.User;
+import btl.weather.UserManager;
 
 public class Planner extends JPanel {
 
@@ -17,7 +22,7 @@ public class Planner extends JPanel {
     private String username; // Tên người dùng
 
     public Planner(User user) {
-        this.username = user.getUserId();  // Nhận tên người dùng khi đăng nhập
+        this.username = user.getUsername();  // Nhận tên người dùng khi đăng nhập
         System.out.println(username);
         setLayout(new BorderLayout());  // Cài đặt Layout cho panel
 
@@ -45,9 +50,11 @@ public class Planner extends JPanel {
 
         // Tạo panel nhập công việc
         JPanel taskPanel = new JPanel();
-        taskPanel.setLayout(new BorderLayout());
+        taskPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
 
-        taskTextArea = new JTextArea(5, 20);
+        taskTextArea = new JTextArea(2, 20);
+        taskTextArea.setText("Write a plan here");
         taskTextArea.setLineWrap(true);
         taskTextArea.setWrapStyleWord(true);
         JScrollPane taskScrollPane = new JScrollPane(taskTextArea);
@@ -59,9 +66,27 @@ public class Planner extends JPanel {
         taskList = new JList<>(taskListModel);
         JScrollPane taskListScrollPane = new JScrollPane(taskList);
 
-        taskPanel.add(taskScrollPane, BorderLayout.CENTER);
-        taskPanel.add(addButton, BorderLayout.SOUTH);
-        taskPanel.add(taskListScrollPane, BorderLayout.EAST);
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.weightx = 1;
+        constraints.weighty = 0.7;
+        taskPanel.add(taskListScrollPane, constraints);
+
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.weightx = 1;
+        constraints.weighty = 0;
+        taskPanel.add(taskScrollPane, constraints);
+
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.weightx = 1;
+        constraints.weighty = 0;
+        taskPanel.add(addButton, constraints);
+
 
         panel.add(taskPanel, BorderLayout.CENTER);
 
@@ -74,7 +99,16 @@ public class Planner extends JPanel {
                     String selectedDate = getSelectedDate();
                     taskListModel.addElement(selectedDate + " - " + task);
                     taskTextArea.setText("");
-                    saveTaskToFile(selectedDate, task); // Lưu công việc vào file khi thêm
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = new Date();
+                    try {
+                        date = sdf.parse(selectedDate);
+                    }
+                    catch (ParseException pe) {
+                        pe.printStackTrace();
+                    }
+                    user.addPlan(new Plan(task, date));
+                    new UserManager().createNewUser(user);
                 } else {
                     JOptionPane.showMessageDialog(Planner.this, "Please enter a task.");
                 }
@@ -84,8 +118,9 @@ public class Planner extends JPanel {
         // Thêm panel chính vào frame
         add(panel, BorderLayout.CENTER);
 
-        // Tải công việc của người dùng khi khởi động
-        loadTasksFromFile();
+        for(Plan plan: user.getPlans()) {
+            taskListModel.addElement(plan.toString());
+        }
     }
 
     // Hàm tạo danh sách ngày (1 đến 31)
@@ -118,48 +153,4 @@ public class Planner extends JPanel {
         String year = (String) yearComboBox.getSelectedItem();
         return day + "/" + month + "/" + year;
     }
-
-    // Lưu công việc vào file
-    private void saveTaskToFile(String date, String task) {
-        // Tạo thư mục "planner" nếu chưa tồn tại
-        File plannerDir = new File("planner");
-        if (!plannerDir.exists()) {
-            plannerDir.mkdirs();  // Tạo thư mục nếu chưa có
-        }
-
-        // Tạo tệp công việc của người dùng trong thư mục "planner"
-        File taskFile = new File(plannerDir, username + "_tasks.txt");
-
-        // Ghi công việc vào file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(taskFile, true))) {
-            writer.write(date + " - " + task);
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    // Tải công việc từ file của người dùng
-    private void loadTasksFromFile() {
-        // Đường dẫn đến thư mục "planner" và tệp công việc của người dùng
-        File plannerDir = new File("planner");
-        File taskFile = new File(plannerDir, username + "_tasks.txt");
-
-        // Kiểm tra xem tệp có tồn tại không
-        if (!taskFile.exists()) {
-            return;  // Nếu không có tệp, không làm gì cả
-        }
-
-        // Đọc dữ liệu từ file công việc
-        try (BufferedReader reader = new BufferedReader(new FileReader(taskFile))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                taskListModel.addElement(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

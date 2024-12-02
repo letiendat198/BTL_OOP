@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class UserManager {
     ObjectInputStream ois;
-    Map<String, User> userData = new HashMap<>();
+    static Map<String, User> userData = new HashMap<>();
     public UserManager() {
         try {
             File userDataFile = new File("users.dat");
@@ -36,7 +36,7 @@ public class UserManager {
     }
 
     public void createNewUser(User newUser) {
-        userData.put(newUser.getUserId(), newUser);
+        userData.put(newUser.getUsername(), newUser);
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.dat"));
             oos.writeObject(userData);

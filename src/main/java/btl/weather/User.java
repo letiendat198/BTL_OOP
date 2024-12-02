@@ -6,7 +6,6 @@ import java.util.List;
 
 public class User implements Serializable {
 
-    private String userId;
     private String username;
     private String email;
     private String preferredUnit;
@@ -15,14 +14,6 @@ public class User implements Serializable {
 
     public User() {
         this.plans = new ArrayList<>();
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {
@@ -76,5 +67,9 @@ public class User implements Serializable {
             System.out.println("Invalid plan index.");
             return null;
         }
+    }
+
+    public List<Plan> getPlans() {
+        return plans;
     }
 }

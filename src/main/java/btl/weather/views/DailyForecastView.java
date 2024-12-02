@@ -6,18 +6,18 @@ import btl.weather.WeatherDataSource;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.table.JTableHeader;
 
-public class DailyForecast extends JPanel {
+public class DailyForecastView extends JPanel{
     User user;
     Date date;
 
-    public DailyForecast(User user) {
+    public DailyForecastView(User user) {
         this.user = user;
         date = new Date();
         Date today = new Date();
@@ -81,7 +81,7 @@ public class DailyForecast extends JPanel {
 
         table.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                    boolean hasFocus, int row, int column) {
+                                                           boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 if (row % 2 == 0) {
                     c.setBackground(new Color(245, 245, 245));
@@ -124,3 +124,6 @@ public class DailyForecast extends JPanel {
         this.add(scrollPane, BorderLayout.CENTER);
     }
 }
+
+
+

@@ -6,9 +6,12 @@ import btl.weather.WeatherDataSource;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class CurrentForecast extends JPanel {
-    public CurrentForecast(User user) {
+public class CurrentForecastView extends JPanel {
+    Date date = new Date();
+    public CurrentForecastView(User user) {
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(50, 30, 10, 30));
         JPanel mainContainer = new JPanel(new GridBagLayout());
@@ -51,18 +54,27 @@ public class CurrentForecast extends JPanel {
         JPanel hourlyForecastSection = new JPanel();
         hourlyForecastSection.setLayout(new BoxLayout(hourlyForecastSection, BoxLayout.LINE_AXIS));
         for (int i=0;i<12;i++) {
-            hourlyForecastSection.add(new HourlyForecast(user));
+            Date nextHour = new Date(date.getTime() + 3600L * 1000L * (i+1));
+            hourlyForecastSection.add(new HourlyForecastView(user, nextHour));
         }
         Dimension scrollPreferredSize = hourlyForecastSection.getPreferredSize();
-        scrollPreferredSize.height = 115;
+        scrollPreferredSize.height = 130;
         hourlyForecastSection.setPreferredSize(scrollPreferredSize);
         JScrollPane scrollPane = new JScrollPane(hourlyForecastSection);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 10));
 
         JLabel locationLabel = new JLabel(String.format("Forecast for: %s - %s", user.getLocation().getCity(), user.getLocation().getCountry()));
-        locationLabel.setHorizontalAlignment(JLabel.CENTER);
-        this.add(locationLabel, BorderLayout.NORTH);
+        SimpleDateFormat fullDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        String today = fullDateFormat.format(date);
+        JLabel dateLabel = new JLabel(today);
+        locationLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        dateLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        Box title = Box.createVerticalBox();
+        title.add(locationLabel);
+        title.add(dateLabel);
+
+        this.add(title, BorderLayout.NORTH);
         this.add(mainContainer, BorderLayout.CENTER);
         this.add(scrollPane, BorderLayout.SOUTH);
     }
