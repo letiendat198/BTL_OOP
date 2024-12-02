@@ -59,4 +59,5 @@ public class WeatherDaily {
     public void setLowTemperature(float lowTemperature) {
         this.lowTemperature = lowTemperature;
     }
+    
 }

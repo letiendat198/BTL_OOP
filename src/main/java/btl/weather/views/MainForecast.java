@@ -16,9 +16,11 @@ public class MainForecast extends JFrame {
         JTabbedPane tabbedPane = new JTabbedPane();
         JPanel dailyForecastPanel = new DailyForecast(user);
         JPanel currentForecastPanel = new CurrentForecast(user);
+        JPanel plannerPanel = new Planner(user);
 
         tabbedPane.add("Current Forecast", currentForecastPanel);
         tabbedPane.add("Daily Forecast", dailyForecastPanel);
+        tabbedPane.add("Planner", plannerPanel);
         this.add(tabbedPane);
     }
 }
